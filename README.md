@@ -32,7 +32,7 @@ query user($id: Int!) {
 ## Usage
 ```bash
 # Install
-npm install gql-generator-node --save-dev //TODO
+npm install gql-generator-node --save-dev 
 ```
 
 # Generate sample queries from schema
