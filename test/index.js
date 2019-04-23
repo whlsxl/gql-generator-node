@@ -1,14 +1,15 @@
-const cp = require('child_process');
+const gqlGenerator = require('../index');
+require('graphql-import-node');
+const typeDefs = require('../example/sampleTypeDef.graphql');
+const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 require('should');
 
-test('validate generated queries', async () => {
-  cp.execSync('node index.js --schemaFilePath ./example/sampleTypeDef.graphql --destDirPath ./example/output');
-  const queries = require('../example/output');
-  queries.mutations.signin.indexOf('signin').should.not.equal(-1);
-});
+const schema = makeExecutableSchema({ typeDefs:typeDefs });
 
-test('limt depth', async () => {
-  cp.execSync('node index.js --schemaFilePath ./example/sampleTypeDef.graphql --destDirPath ./example/output2 --depthLimit 1');
-  const queries = require('../example/output2');
-  queries.mutations.signup.indexOf('createdAt').should.equal(-1);
-});
+test('validate generated queries', async () =>
+  gqlGenerator(schema).mutations.signin.indexOf('signin').should.not.equal(-1)
+);
+
+test('limt depth', async () =>
+  gqlGenerator(schema,1).mutations.signup.indexOf('createdAt').should.equal(-1)
+);
