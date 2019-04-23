@@ -37,7 +37,7 @@ npm install gql-generator-node --save-dev
 
 # Generate sample queries from schema
 ```
-import gqlGenerator from 'gql-generator';
+import gqlGenerator from 'gql-generator-node';
 const {queries, mutations, subscriptions} = gqlGenerator(schema);
 
 console.log(mutations.signup);
