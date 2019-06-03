@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 /**
  * Compile arguments dictionary for a field
  * @param field current field object
@@ -171,4 +170,4 @@ module.exports = function (schema, depthLimit = 100, dedupe = getFieldArgsDict) 
 	}
 
 	return result;
-}
+};
