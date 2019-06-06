@@ -1,6 +1,6 @@
 # gql-generator-node
 
-Generate queries from graphql schema, used for writing api test.
+Generate queries from a GraphQL schema, used for writing API test.
 
 ## Example
 ```gql
@@ -59,7 +59,7 @@ mutation signup($username: String!, email: String!, password: String!){
 
 ## Usage example
 
-Say you have a graphql schema like this: 
+Say you have a GraphQL schema like this: 
 
 ```gql
 type Mutation {
@@ -83,7 +83,7 @@ type User {
 }
 ```
 
-Before this tool, you write graphql api test like this:
+Before this tool, you write GraphQL API test like this:
 
 ```js
 test('signup', async () => {
@@ -103,7 +103,7 @@ test('signup', async () => {
 });
 ```
 
-As `gqlGenerator` generated the queries for you, you don't need to write the query yourself, so your test will becomes:
+As `gqlGenerator` generated the queries for you, you don't need to write the query yourself, so your test will become:
 
 ```js
 const {queries} = generateAll(schema);
@@ -115,32 +115,32 @@ test.each(Object.entries(queries))('%s', async ([name,query]) =>
 
 ## Advanced used cases
 
-One might want to generate single query which can be done as shown in test file:
+One might want to generate a single query which can be done as shown in the test file:
 ```js
 import {generateQuery} from "gql-generator-node";
 
 generateQuery({
-	field: schema
-		.getQueryType()
-		.getFields().user
+    field: schema
+        .getQueryType()
+        .getFields().user
 })
 ```
 Moreover the responese fields might be limited by passing skeleton object:
 ```js
 generateQuery({
-	field: schema
-		.getQueryType()
-		.getFields().user,
-	skeleton: {
-		'email':
-			true
-	}
+    field: schema
+        .getQueryType()
+        .getFields().user,
+    skeleton: {
+        'email':
+            true
+    }
 })
 ```
 
 ### Custom dedupe
 
-As default top variables names corresponds to schema while nested ones can be addressed by the path - so all of them can be addressed independently in declarative way.
+As default top variables names correspond to schema while nested ones can be addressed by the path - so all of them can be addressed independently in a declarative way.
 Ex:
 ```graphql
 mutation signup($signup_user_context_user_details_region_language: String, $signup_user_details_region_language: String, $email: String!, $username: String!, $password: String!){
@@ -183,12 +183,12 @@ mutation signup($signup_user_context_user_details_region_language: String, $sign
 Yet some applications might take advantage of custom dedupe functions as follows:
 ```js
 gqlGenerator(schema,depth,({args})=>{
-		const o = {};
-		(args || []).forEach(arg=>{
-			o[arg.name] = arg;
-		});
-		return o;
-	})
+        const o = {};
+        (args || []).forEach(arg=>{
+            o[arg.name] = arg;
+        });
+        return o;
+    })
 ```
 =>
 ```graphql
@@ -232,13 +232,13 @@ mutation signup($language: String, $email: String!, $username: String!, $passwor
 
 ## Notes
 
-- Variable names are derived from argument names, so variables generated from multiple occurrences of the same argument name must be deduped. By default an subtree arguments are given path prefix (ex. can be found in dedupe description).
+- Variable names are derived from argument names, so variables generated from multiple occurrences of the same argument name must be deduped. By default, subtree arguments are given path prefix (ex. can be found in dedupe description).
 
 > Code has been adopted from [modelo/gql-generator](https://github.com/modelo/gql-generator)
 
 ## Maintenance
 
-Please feel free open the issues! Although, current stage satisfy my application usage, I would be happy provide help and improvements if there will be need for it. 
+Please feel free open the issues! Although the current stage satisfies my application usage, I would be happy to provide help and improvements if there will be a need for it. 
 
 ---
 Happy hacking!
