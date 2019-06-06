@@ -36,9 +36,9 @@ npm install gql-generator-node --save-dev
 ```
 
 # Generate sample queries from schema
-```
-import gqlGenerator from 'gql-generator-node';
-const {queries, mutations, subscriptions} = gqlGenerator(schema);
+```js
+import {generateAll} from 'gql-generator-node';
+const {queries, mutations, subscriptions} = generateAll(schema);
 
 console.log(mutations.signup);
 /*
@@ -106,11 +106,36 @@ test('signup', async () => {
 As `gqlGenerator` generated the queries for you, you don't need to write the query yourself, so your test will becomes:
 
 ```js
-const {queries} = gqlGenerator(schema);
+const {queries} = generateAll(schema);
 
 test.each(Object.entries(queries))('%s', async ([name,query]) => 
   graphql(query)
 );
+```
+
+## Advanced used cases
+
+One might want to generate single query which can be done as shown in test file:
+```js
+import {generateQuery} from "gql-generator-node";
+
+generateQuery({
+	field: schema
+		.getQueryType()
+		.getFields().user
+})
+```
+Moreover the responese fields might be limited by passing skeleton object:
+```js
+generateQuery({
+	field: schema
+		.getQueryType()
+		.getFields().user,
+	skeleton: {
+		'email':
+			true
+	}
+})
 ```
 
 ### Custom dedupe
@@ -207,11 +232,13 @@ mutation signup($language: String, $email: String!, $username: String!, $passwor
 
 ## Notes
 
-- As this tool is used for tests, it expands all of the fields in a query. There might be recursive fields in the query, so `gqlGenerator` ignores the types which have been added in the parent queries already.
-- Variable names are derived from argument names, so variables generated from multiple occurrences of the same argument name must be deduped. An index is appended to any duplicates e.g. `region(language: $language1)`.
+- Variable names are derived from argument names, so variables generated from multiple occurrences of the same argument name must be deduped. By default an subtree arguments are given path prefix (ex. can be found in dedupe description).
 
 > Code has been adopted from [modelo/gql-generator](https://github.com/modelo/gql-generator)
 
 ## Maintenance
 
 Please feel free open the issues! Although, current stage satisfy my application usage, I would be happy provide help and improvements if there will be need for it. 
+
+---
+Happy hacking!

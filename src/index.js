@@ -1,83 +1,72 @@
 #!/usr/bin/env node
 
+import { getArgsToVarsStr, getFieldArgsDict, getVarsToTypesStr, moduleConsole } from "./utils";
+import { QUERY_KINDS } from "./constants";
+
 /**
- * Compile arguments dictionary for a field
- * @param field current field object
- * @param duplicateArgCounts map for deduping argument name collisions
- * @param allArgsDict dictionary of all arguments
+ * Generate the query for the specified field
+ * @param field executable schema representative
+ * @param rootSkeleton Object representation of fields in interest
+ * @param kind of query - Actual Query or Mutation, Subscription
+ * @param depthLimit
+ * @param dedupe function to resolve query variables conflicts
  */
-const getFieldArgsDict = (field,
-                          duplicateArgCounts,
-                          allArgsDict = {}, path) =>
-	field.args.reduce((o, arg) => {
-		const arg_name = `${path.join('_')}_${field.name}_${arg.name}`;
-		if (arg_name in duplicateArgCounts) {
-			const index = duplicateArgCounts[arg_name] + 1;
-			duplicateArgCounts[arg_name] = index;
-			o[`${arg_name}${index}`] = arg;
-		} else if (allArgsDict[arg_name]) {
-			duplicateArgCounts[arg_name] = 1;
-			o[arg_name] = arg;
-		} else if (!path.length) {
-			o[arg.name] = arg;
-		} else {
-			o[arg_name] = arg;
-		}
-		return o;
-	}, {});
-
-module.exports = function (schema, depthLimit = 100, dedupe = getFieldArgsDict) {
-
-	const result = {};
-
-	/**
-	 * Generate variables string
-	 * @param dict dictionary of arguments
-	 */
-	const getArgsToVarsStr = dict => Object.entries(dict)
-		.map(([varName, arg]) => `${arg.name}: $${varName}`)
-		.join(', ');
-
-	/**
-	 * Generate types string
-	 * @param dict dictionary of arguments
-	 */
-	const getVarsToTypesStr = dict => Object.entries(dict)
-		.map(([varName, arg]) => `$${varName}: ${arg.type}`)
-		.join(', ');
+export const generateQuery = ({
+	                              field: rootField,
+	                              skeleton: rootSkeleton,
+	                              kind = 'Query',
+	                              depthLimit,
+	                              dedupe = getFieldArgsDict
+}) => {
 
 	/**
 	 * Generate the query for the specified field
-	 * @param curName name of the current field
-	 * @param curParentType parent type of the current field
-	 * @param curParentName parent name of the current field
+	 * @param field executable schema representative
+	 * @param skeleton Object representation of fields in interest
+	 * @param parentName parent name of the current field
 	 * @param argumentsDict dictionary of arguments from all fields
 	 * @param duplicateArgCounts map for deduping argument name collisions
 	 * @param crossReferenceKeyList list of the cross reference
-	 * @param curDepth currentl depth of field
+	 * @param curDepth current depth of field
+	 * @param path
 	 */
-	const generateQuery = (curName,
-	                       curParentType,
-	                       curParentName,
-	                       argumentsDict = {},
-	                       duplicateArgCounts = {},
-	                       crossReferenceKeyList = [], // [`${curParentName}To${curName}Key`]
-	                       curDepth = 1,
-	                       path = []) => {
-		const field = schema.getType(curParentType).getFields()[curName];
-		const curTypeName = field.type.inspect().replace(/[[\]!]/g, '');
-		const curType = schema.getType(curTypeName);
+	const generateQueryRecursive = ({
+		                                field,
+		                                skeleton,
+		                                parentName,
+		                                argumentsDict = {},
+		                                duplicateArgCounts = {},
+		                                crossReferenceKeyList = [], // [`${parentName}To${curName}Key`]
+		                                curDepth = 1,
+		                                path = []
+	                                }) => {
+		let curType = field.type;
+		if (curType.ofType) curType = curType.ofType;
 		let queryStr = '';
 		let childQuery = '';
 
 		if (curType.getFields) {
-			const crossReferenceKey = `${curParentName}To${curName}Key`;
+			const crossReferenceKey = `${parentName}To${field.name}Key`;
 			if (crossReferenceKeyList.indexOf(crossReferenceKey) !== -1 || curDepth > depthLimit) return '';
 			crossReferenceKeyList.push(crossReferenceKey);
-			const childKeys = Object.keys(curType.getFields());
-			childQuery = childKeys
-				.map(cur => generateQuery(cur, curType, curName, argumentsDict, duplicateArgCounts,
-					crossReferenceKeyList, curDepth + 1, path.concat(curName)).queryStr)
+			const children = curType.getFields();
+			childQuery = Object.entries(children);
+			if (skeleton) {
+				const skeletonKeys = Object.keys(skeleton);
+				childQuery = childQuery
+					.filter(([key]) => skeletonKeys.indexOf(key) !== -1)
+			} else skeleton = {};
+			childQuery = childQuery
+				.map(([key, childField]) => generateQueryRecursive({
+					field: childField,
+					skeleton: skeleton[key],
+					parentName: field.name,
+					argumentsDict,
+					duplicateArgCounts,
+					crossReferenceKeyList,
+					curDepth: curDepth + 1,
+					path: path.concat(field.name)
+				}).queryStr)
 				.filter(cur => cur)
 				.join('\n');
 		}
@@ -102,21 +91,51 @@ module.exports = function (schema, depthLimit = 100, dedupe = getFieldArgsDict) 
 				const fragIndent = `${'    '.repeat(curDepth + 1)}`;
 				queryStr += '{\n';
 
-				for (let i = 0, len = types.length; i < len; i++) {
-					const valueTypeName = types[i];
-					const valueType = schema.getType(valueTypeName);
-					const unionChildQuery = Object.keys(valueType.getFields())
-						.map(cur => generateQuery(cur, valueType, curName, argumentsDict, duplicateArgCounts,
-							crossReferenceKeyList, curDepth + 2, path.concat(curName)).queryStr)
+				types.forEach(type => {
+					let unionChildQuery = Object.entries(type.getFields());
+					if (skeleton) {
+						const skeletonKeys = Object.keys(skeleton);
+						unionChildQuery = unionChildQuery
+							.filter(([key]) => skeletonKeys.indexOf(key) !== -1)
+					} else skeleton = {};
+					unionChildQuery
+						.map(([key, childField]) => generateQueryRecursive({
+							field: childField,
+							skeleton: skeleton[key],
+							parentName: field.name,
+							argumentsDict,
+							duplicateArgCounts,
+							crossReferenceKeyList,
+							curDepth: curDepth + 1,
+							path: path.concat(field.name)
+						}).queryStr)
 						.filter(cur => cur)
 						.join('\n');
-					queryStr += `${fragIndent}... on ${valueTypeName} {\n${unionChildQuery}\n${fragIndent}}\n`;
-				}
+					queryStr += `${fragIndent}... on ${type.name} {\n${unionChildQuery}\n${fragIndent}}\n`;
+
+				});
 				queryStr += `${indent}}`;
 			}
 		}
 		return { queryStr, argumentsDict };
 	};
+
+	return wrapQueryIntoKindDeclaration(kind, rootField, generateQueryRecursive({
+		field: rootField,
+		skeleton: rootSkeleton,
+		parentName: kind
+	}));
+};
+
+function wrapQueryIntoKindDeclaration(kind, alias, queryResult) {
+	const varsToTypesStr = getVarsToTypesStr(queryResult.argumentsDict);
+	const query = queryResult.queryStr;
+	return `${kind} ${alias.name}${varsToTypesStr ? `(${varsToTypesStr})` : ''}{\n${query}\n}`;
+}
+
+export function generateAll(schema, depthLimit = 100, dedupe = getFieldArgsDict) {
+
+	const result = {};
 
 	/**
 	 * Generate the query for the specified field
@@ -124,50 +143,32 @@ module.exports = function (schema, depthLimit = 100, dedupe = getFieldArgsDict) 
 	 * @param description description of the current object
 	 */
 	const addToResult = (obj, description) => {
-		let field;
-		switch (description) {
-			case 'Mutation':
-				field = 'mutations';
-				break;
-			case 'Query':
-				field = 'queries';
-				break;
-			case 'Subscription':
-				field = 'subscriptions';
-				break;
-			default:
-				console.log('[gqlg warning]:', 'description is required');
-		}
-		result[field] = {};
-		Object.keys(obj).forEach((type) => {
-			result[field][type] = generateWrappedQuery({ type, description });
+		const kind = `${(QUERY_KINDS[description] ||
+			moduleConsole.warn(`unknown description string: ${description}`) ||
+			String(description)).toLowerCase()}s`;
+		result[kind] = {};
+		Object.entries(obj).forEach(([type, field]) => {
+			result[kind][type] = generateQuery({ field, parentName: description, depthLimit, dedupe });
 		});
 	};
-
-	function generateWrappedQuery({ type, description }) {
-		const queryResult = generateQuery(type, description);
-		const varsToTypesStr = getVarsToTypesStr(queryResult.argumentsDict);
-		const query = queryResult.queryStr;
-		return `${description.toLowerCase()} ${type}${varsToTypesStr ? `(${varsToTypesStr})` : ''}{\n${query}\n}`;
-	}
 
 	if (schema.getMutationType()) {
 		addToResult(schema.getMutationType().getFields(), 'Mutation');
 	} else {
-		console.log('[gqlg warning]:', 'No mutation type found in your schema');
+		moduleConsole.warn('No mutation type found in your schema');
 	}
 
 	if (schema.getQueryType()) {
 		addToResult(schema.getQueryType().getFields(), 'Query');
 	} else {
-		console.log('[gqlg warning]:', 'No query type found in your schema');
+		moduleConsole.warn('No query type found in your schema');
 	}
 
 	if (schema.getSubscriptionType()) {
 		addToResult(schema.getSubscriptionType().getFields(), 'Subscription');
 	} else {
-		console.log('[gqlg warning]:', 'No subscription type found in your schema');
+		moduleConsole.warn('No subscription type found in your schema');
 	}
 
 	return result;
-};
+}

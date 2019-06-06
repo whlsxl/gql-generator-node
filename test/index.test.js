@@ -6,12 +6,12 @@ require('should');
 const graphql = require('graphql');
 
 const schema = makeExecutableSchema({ typeDefs });
+import { generateAll, generateQuery } from "../src";
 
 it('validate generated queries', async () => {
-	console.log(graphql);
-	gqlGenerator(schema,undefined,({args})=>{
+	generateAll(schema, undefined, ({ args }) => {
 		const o = {};
-		(args || []).forEach(arg=>{
+		(args || []).forEach(arg => {
 			o[arg.name] = arg;
 		});
 		return o;
@@ -19,5 +19,29 @@ it('validate generated queries', async () => {
 });
 
 it('limt depth', async () =>
-	gqlGenerator(schema,1).mutations.signup.indexOf('createdAt').should.equal(-1)
+	generateAll(schema, 1).mutations.signup.indexOf('createdAt').should.equal(-1)
+);
+
+it('check field generator', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().user
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().user,
+			skeleton: {
+				'email':
+					true
+			}
+		})
+	).toMatchSnapshot()
 );

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`check field generator 1`] = `
+"Query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
+    user(id: $id){
+        id
+        username
+        email
+        createdAt
+        context{
+            user{
+                id
+                username
+                email
+                createdAt
+                details{
+                    ... on Guest {
+region,[object Object]
+                    }
+                    ... on Member {
+
+                    }
+                }
+            }
+            domain
+        }
+        details{
+            ... on Guest {
+region,[object Object]
+            }
+            ... on Member {
+
+            }
+        }
+    }
+}"
+`;
+
+exports[`check field generator with skeleton 1`] = `
+"Query user($id: Int!){
+    user(id: $id){
+        email
+    }
+}"
+`;
