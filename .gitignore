@@ -1,11 +1,8 @@
 lib/
 
-#Pycharm charm
-.idea
-
 # output files of test
-example/output
-example/output2
+schemas/output
+schemas/output2
 
 # Logs
 logs

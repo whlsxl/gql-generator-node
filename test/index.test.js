@@ -1,9 +1,11 @@
 require('graphql-import-node');
-const typeDefs = require('../example/sampleTypeDef.graphql');
+const typeDefs = require('./schemas/sampleTypeDef.graphql');
+const typeDefsWithoutMutation = require('./schemas/empty.graphql');
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 require('should');
 
 const schema = makeExecutableSchema({ typeDefs });
+const schemaWithoutMutation = makeExecutableSchema({ typeDefs: typeDefsWithoutMutation });
 import { generateAll, generateQuery } from "../src";
 
 it('validate generated queries', async () => {
@@ -41,5 +43,101 @@ it('check field generator with skeleton', async () =>
 					true
 			}
 		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton - nested types', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().user,
+			skeleton: {
+				email: true,
+				context: {
+					domain: true
+				}
+			}
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton - unions', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().user,
+			skeleton: {
+				email: true,
+				details: {
+					region: true
+				}
+			}
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton - circular', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().user,
+			skeleton: {
+				email: true,
+				details: {
+					user: {
+						region: true
+					},
+					region: true
+				}
+			}
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton - multiple fields with same query parameter name', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getMutationType()
+				.getFields().setConfig
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator with skeleton - multiple fields with same query parameter name', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getMutationType()
+				.getFields().setConfig,
+			duplicateArgCounts: {
+				setConfig_level_domain: "level_domain",
+				setConfig_lastSeen_domain: "lastSeen_domain",
+				setConfig_theme_domain: "theme_domain"
+			}
+		})
+	).toMatchSnapshot()
+);
+
+it('check field generator for non-empty array ([]!)', async () =>
+	expect(
+		generateQuery({
+			field: schema
+				.getQueryType()
+				.getFields().users,
+			skeleton: {
+				email:
+					true
+			}
+		})
+	).toMatchSnapshot()
+);
+
+it('check warnings for no mutations, query, subscription in schema', async () =>
+	expect(
+		generateAll(schemaWithoutMutation)
 	).toMatchSnapshot()
 );
