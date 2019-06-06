@@ -98,7 +98,7 @@ export const generateQuery = ({
 						unionChildQuery = unionChildQuery
 							.filter(([key]) => skeletonKeys.indexOf(key) !== -1)
 					} else skeleton = {};
-					unionChildQuery
+					unionChildQuery = unionChildQuery
 						.map(([key, childField]) => generateQueryRecursive({
 							field: childField,
 							skeleton: skeleton[key],

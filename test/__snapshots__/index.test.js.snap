@@ -15,7 +15,7 @@ exports[`check field generator 1`] = `
                 createdAt
                 details{
                     ... on Guest {
-region,[object Object]
+                    region(language: $user_context_user_details_region_language)
                     }
                     ... on Member {
 
@@ -26,7 +26,7 @@ region,[object Object]
         }
         details{
             ... on Guest {
-region,[object Object]
+            region(language: $user_details_region_language)
             }
             ... on Member {
 
