@@ -1,9 +1,7 @@
-const gqlGenerator = require('../src');
 require('graphql-import-node');
 const typeDefs = require('../example/sampleTypeDef.graphql');
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 require('should');
-const graphql = require('graphql');
 
 const schema = makeExecutableSchema({ typeDefs });
 import { generateAll, generateQuery } from "../src";
@@ -39,7 +37,7 @@ it('check field generator with skeleton', async () =>
 				.getQueryType()
 				.getFields().user,
 			skeleton: {
-				'email':
+				email:
 					true
 			}
 		})
