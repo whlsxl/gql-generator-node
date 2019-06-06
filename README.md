@@ -238,7 +238,8 @@ mutation signup($language: String, $email: String!, $username: String!, $passwor
 
 ## Maintenance
 
-Please feel free open the issues! Although the current stage satisfies my application usage, I would be happy to provide help and improvements if there will be a need for it. 
+Please feel free open the issues! Although the current stage satisfies my application usage, I would be happy to provide help and improvements if there will be a need for it.
+Also you can just give it a start so I will become aware that is not only me using it and be more carefull about relases.
 
 ---
 Happy hacking!
