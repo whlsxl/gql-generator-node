@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`check field generator 1`] = `
-"Query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
+"query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
     user(id: $id){
         id
         username
@@ -37,7 +37,7 @@ exports[`check field generator 1`] = `
 `;
 
 exports[`check field generator with skeleton 1`] = `
-"Query user($id: Int!){
+"query user($id: Int!){
     user(id: $id){
         email
     }

@@ -129,7 +129,7 @@ export const generateQuery = ({
 function wrapQueryIntoKindDeclaration(kind, alias, queryResult) {
 	const varsToTypesStr = getVarsToTypesStr(queryResult.argumentsDict);
 	const query = queryResult.queryStr;
-	return `${kind} ${alias.name}${varsToTypesStr ? `(${varsToTypesStr})` : ''}{\n${query}\n}`;
+	return `${kind.toLowerCase()} ${alias.name}${varsToTypesStr ? `(${varsToTypesStr})` : ''}{\n${query}\n}`;
 }
 
 export function generateAll(schema, depthLimit = 100, dedupe = getFieldArgsDict) {
