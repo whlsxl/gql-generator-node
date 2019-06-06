@@ -119,15 +119,52 @@ One might want to generate a single query which can be done as shown in the test
 ```js
 import {generateQuery} from "gql-generator-node";
 
-generateQuery({
+const query = generateQuery({
     field: schema
         .getQueryType()
         .getFields().user
 })
+
+console.log(query);
+/*
+  Query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
+      user(id: $id){
+          id
+          username
+          email
+          createdAt
+          context{
+              user{
+                  id
+                  username
+                  email
+                  createdAt
+                  details{
+                      ... on Guest {
+  region,[object Object]
+                      }
+                      ... on Member {
+
+                      }
+                  }
+              }
+              domain
+          }
+          details{
+              ... on Guest {
+  region,[object Object]
+              }
+              ... on Member {
+
+              }
+          }
+      }
+  }
+*/
 ```
 Moreover the responese fields might be limited by passing skeleton object:
 ```js
-generateQuery({
+const query = generateQuery({
     field: schema
         .getQueryType()
         .getFields().user,
@@ -136,6 +173,15 @@ generateQuery({
             true
     }
 })
+
+console.log(query);
+/*
+  Query user($id: Int!){
+      user(id: $id){
+          email
+      }
+  }
+*/
 ```
 
 ### Custom dedupe
