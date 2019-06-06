@@ -93,7 +93,7 @@ export const generateQuery = ({
 
 				types.forEach(type => {
 					let unionChildQuery = Object.entries(type.getFields());
-					if (skeleton) {
+					if (skeleton && Object.keys(skeleton).length) {
 						const skeletonKeys = Object.keys(skeleton);
 						unionChildQuery = unionChildQuery
 							.filter(([key]) => skeletonKeys.indexOf(key) !== -1)
@@ -106,13 +106,12 @@ export const generateQuery = ({
 							argumentsDict,
 							duplicateArgCounts,
 							crossReferenceKeyList,
-							curDepth: curDepth + 1,
+							curDepth: curDepth + 2,
 							path: path.concat(field.name)
 						}).queryStr)
 						.filter(cur => cur)
 						.join('\n');
 					queryStr += `${fragIndent}... on ${type.name} {\n${unionChildQuery}\n${fragIndent}}\n`;
-
 				});
 				queryStr += `${indent}}`;
 			}

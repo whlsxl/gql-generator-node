@@ -15,10 +15,10 @@ exports[`check field generator 1`] = `
                 createdAt
                 details{
                     ... on Guest {
-                    region(language: $user_context_user_details_region_language)
+                        region(language: $user_context_user_details_region_language)
                     }
                     ... on Member {
-
+                        address
                     }
                 }
             }
@@ -26,10 +26,10 @@ exports[`check field generator 1`] = `
         }
         details{
             ... on Guest {
-            region(language: $user_details_region_language)
+                region(language: $user_details_region_language)
             }
             ... on Member {
-
+                address
             }
         }
     }

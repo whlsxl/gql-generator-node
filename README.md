@@ -127,39 +127,39 @@ const query = generateQuery({
 
 console.log(query);
 /*
-  Query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
-      user(id: $id){
-          id
-          username
-          email
-          createdAt
-          context{
-              user{
-                  id
-                  username
-                  email
-                  createdAt
-                  details{
-                      ... on Guest {
-  region,[object Object]
-                      }
-                      ... on Member {
-
-                      }
-                  }
-              }
-              domain
-          }
-          details{
-              ... on Guest {
-  region,[object Object]
-              }
-              ... on Member {
-
-              }
-          }
-      }
-  }
+	Query user($user_context_user_details_region_language: String, $user_details_region_language: String, $id: Int!){
+	    user(id: $id){
+	        id
+	        username
+	        email
+	        createdAt
+	        context{
+	            user{
+	                id
+	                username
+	                email
+	                createdAt
+	                details{
+	                    ... on Guest {
+	                        region(language: $user_context_user_details_region_language)
+	                    }
+	                    ... on Member {
+	                        address
+	                    }
+	                }
+	            }
+	            domain
+	        }
+	        details{
+	            ... on Guest {
+	                region(language: $user_details_region_language)
+	            }
+	            ... on Member {
+	                address
+	            }
+	        }
+	    }
+	}
 */
 ```
 Moreover the responese fields might be limited by passing skeleton object:
@@ -176,11 +176,11 @@ const query = generateQuery({
 
 console.log(query);
 /*
-  Query user($id: Int!){
-      user(id: $id){
-          email
-      }
-  }
+	Query user($id: Int!){
+	    user(id: $id){
+	        email
+	    }
+	}
 */
 ```
 
