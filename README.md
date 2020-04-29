@@ -1,6 +1,7 @@
 # gql-generator-node
 ![CI](https://github.com/Skitionek/gql-generator-node/workflows/CI/badge.svg)
 ![Unit tests](https://github.com/Skitionek/gql-generator-node/workflows/Unit%20tests/badge.svg)
+![Lint](https://github.com/Skitionek/gql-generator-node/workflows/Lint/badge.svg)
 ![Coverage](https://github.com/Skitionek/gql-generator-node/workflows/Coverage/badge.svg)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
