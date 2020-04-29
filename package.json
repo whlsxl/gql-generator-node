@@ -1,19 +1,19 @@
 {
-  "name"           : "gql-generator-node",
-  "version"        : "2.1.3",
-  "description"    : "Generate queries as simple function of schema.",
-  "main"           : "lib/index.js",
-  "scripts"        : {
-	"prebuild"  : "npm run clean",
-	"clean"     : "rimraf lib",
-	"test"      : "npm run lint && npm run test:only",
-	"test:prod" : "cross-env BABEL_ENV=production npm run test",
-	"test:only": "jest",
-	"test:watch": "npm test -- --watch",
-	"cover"     : "npm run test -- --coverage",
-	"lint"      : "eslint src test",
-	"build"     : "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
-	"prepublishOnly": "npm run clean && npm run lint && npm run test && npm run build"
+  "name": "gql-generator-node",
+  "version": "2.1.3",
+  "description": "Generate queries as simple function of schema.",
+  "main": "lib/index.js",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "clean": "rimraf lib",
+    "test": "npm run lint && npm run test:only",
+    "test:prod": "cross-env BABEL_ENV=production npm run test",
+    "test:only": "jest",
+    "test:watch": "npm test -- --watch",
+    "cover": "npm run test -- --coverage",
+    "lint": "eslint src test",
+    "build": "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
+    "prepublishOnly": "npm run clean && npm run lint && npm run test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,9 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
     "babel-eslint": "^10.0.1",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
@@ -63,6 +66,7 @@
     "jest-transform-graphql": "^2.1.0",
     "mocha": "^5.0.5",
     "nodemon": "^1.19.1",
+    "semantic-release": "^17.0.7",
     "should": "^13.2.1"
   },
   "directories": {
@@ -164,59 +168,59 @@
       "no-console": "off"
     }
   },
-  "jest"           : {
-	"transform"             : {
-	  "\\.(gql|graphql)$": "jest-transform-graphql",
-	  ".*"               : "babel-jest"
-	},
-	"reporters"             : [
-	  "default",
-	  [
-		"jest-summary-reporter",
-		{
-		  "failuresOnly": false
-		}
-	  ]
-	],
-	"coveragePathIgnorePatterns": [
-	  "/test/schemas/"
-	],
-	"moduleFileExtensions"  : [
-	  "js",
-	  "graphql"
-	]
+  "jest": {
+    "transform": {
+      "\\.(gql|graphql)$": "jest-transform-graphql",
+      ".*": "babel-jest"
+    },
+    "reporters": [
+      "default",
+      [
+        "jest-summary-reporter",
+        {
+          "failuresOnly": false
+        }
+      ]
+    ],
+    "coveragePathIgnorePatterns": [
+      "/test/schemas/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "graphql"
+    ]
   },
-  "publishConfig"  : {
-	"access": "public"
+  "publishConfig": {
+    "access": "public"
   },
-  "release"        : {
-	"plugins": [
-	  "@semantic-release/commit-analyzer",
-	  "@semantic-release/release-notes-generator",
-	  [
-		"@semantic-release/npm",
-		{
-		  "npmPublish": true
-		}
-	  ],
-	  [
-		"@semantic-release/exec",
-		{
-		  "prepare": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc",
-		  "publish": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc"
-		}
-	  ],
-	  "@semantic-release/github",
-	  [
-		"@semantic-release/exec",
-		{
-		  "prepare": "rm .npmrc",
-		  "publish": "rm .npmrc"
-		}
-	  ],
-	  "@semantic-release/changelog",
-	  "@semantic-release/git"
-	],
-	"branch" : "master"
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": true
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepare": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc",
+          "publish": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc"
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/exec",
+        {
+          "prepare": "rm .npmrc",
+          "publish": "rm .npmrc"
+        }
+      ],
+      "@semantic-release/changelog",
+      "@semantic-release/git"
+    ],
+    "branch": "master"
   }
 }
