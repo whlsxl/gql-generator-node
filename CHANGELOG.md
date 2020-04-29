@@ -1,3 +1,10 @@
+## [2.1.5](https://github.com/Skitionek/gql-generator-node/compare/v2.1.4...v2.1.5) (2020-04-29)
+
+
+### Bug Fixes
+
+* forcing CI after npm version conflict ([4c2cca0](https://github.com/Skitionek/gql-generator-node/commit/4c2cca019a39914f10c58e9d1dc2169633b7b432))
+
 ## [2.1.4](https://github.com/Skitionek/gql-generator-node/compare/v2.1.3...v2.1.4) (2020-04-29)
 
 

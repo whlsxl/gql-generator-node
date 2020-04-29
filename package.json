@@ -1,6 +1,6 @@
 {
   "name": "gql-generator-node",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Generate queries as simple function of schema.",
   "main": "lib/index.js",
   "scripts": {
@@ -115,7 +115,7 @@
     "extends": [
       "eslint-config-prettier",
       "eslint-config-uber-es2015",
-       "prettier"
+      "prettier"
     ],
     "env": {
       "es6": true,
