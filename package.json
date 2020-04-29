@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ardatan/graphql-import-node.git"
+    "url": "git+https://github.com/Skitionek/gql-generator-node.git"
   },
   "keywords": [
     "graphql",
@@ -30,9 +30,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ardatan/graphql-import-node/issues"
+    "url": "https://github.com/Skitionek/gql-generator-node/issues"
   },
-  "homepage": "https://github.com/ardatan/graphql-import-node/#readme",
+  "homepage": "https://github.com/Skitionek/gql-generator-node/#readme",
   "dependencies": {
     "graphql": "^0.13.2"
   },
