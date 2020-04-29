@@ -17,7 +17,7 @@ export const generateQuery = ({
 	                              kind = 'Query',
 	                              depthLimit,
 	                              dedupe = getFieldArgsDict
-}) => {
+                              }) => {
 
 	/**
 	 * Generate the query for the specified field
@@ -137,15 +137,21 @@ export function generateAll(schema, depthLimit = 100, dedupe = getFieldArgsDict)
 
 	const result = {};
 
+	const QUERY_KINDS_MAP = {
+		Query: 'queries',
+		Mutation: 'mutations',
+		Subscription: 'subscriptions'
+	}
+
 	/**
 	 * Generate the query for the specified field
 	 * @param obj one of the root objects(Query, Mutation, Subscription)
 	 * @param description description of the current object
 	 */
 	const addToResult = (obj, description) => {
-		const kind = `${(QUERY_KINDS[description] ||
+		const kind = QUERY_KINDS_MAP[QUERY_KINDS[description]] ||
 			moduleConsole.warn(`unknown description string: ${description}`) ||
-			String(description)).toLowerCase()}s`;
+			`${String(description).toLowerCase()}s`;
 		result[kind] = {};
 		Object.entries(obj).forEach(([type, field]) => {
 			result[kind][type] = generateQuery({ field, parentName: description, depthLimit, dedupe });
