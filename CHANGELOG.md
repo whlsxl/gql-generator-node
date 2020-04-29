@@ -1,3 +1,10 @@
+## [2.1.8](https://github.com/Skitionek/gql-generator-node/compare/v2.1.7...v2.1.8) (2020-04-29)
+
+
+### Bug Fixes
+
+* sneak peak env ([97b0881](https://github.com/Skitionek/gql-generator-node/commit/97b08818b65cccbd2d2d6e50416818fe44e6a45c))
+
 ## [2.1.7](https://github.com/Skitionek/gql-generator-node/compare/v2.1.6...v2.1.7) (2020-04-29)
 
 
