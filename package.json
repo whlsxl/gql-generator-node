@@ -206,7 +206,7 @@
       [
         "@semantic-release/exec",
         {
-          "prepare": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc",
+          "prepare": "env && echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc",
           "publish": "echo 'registry=https://npm.pkg.github.com/skitionek' > .npmrc"
         }
       ],
