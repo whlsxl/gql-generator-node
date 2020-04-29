@@ -1,3 +1,10 @@
+## [2.1.6](https://github.com/Skitionek/gql-generator-node/compare/v2.1.5...v2.1.6) (2020-04-29)
+
+
+### Bug Fixes
+
+* publish also to git npm reppo ([9c66683](https://github.com/Skitionek/gql-generator-node/commit/9c6668385804668bbcb0a912117e578dbf50ebbf))
+
 ## [2.1.5](https://github.com/Skitionek/gql-generator-node/compare/v2.1.4...v2.1.5) (2020-04-29)
 
 
