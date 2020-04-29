@@ -1,3 +1,11 @@
+## [2.1.14](https://github.com/Skitionek/gql-generator-node/compare/v2.1.13...v2.1.14) (2020-04-29)
+
+
+### Bug Fixes
+
+* incorrect name querys -> queries ([04e1af6](https://github.com/Skitionek/gql-generator-node/commit/04e1af696d049b96358cd03dedd396e47d9e93ec))
+* lint ([c89c3f8](https://github.com/Skitionek/gql-generator-node/commit/c89c3f8975dcdf2a6377f1681dde103c0c1f324d))
+
 ## [2.1.13](https://github.com/Skitionek/gql-generator-node/compare/v2.1.12...v2.1.13) (2020-04-29)
 
 
