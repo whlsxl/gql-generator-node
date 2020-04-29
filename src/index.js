@@ -16,9 +16,8 @@ export const generateQuery = ({
 	                              skeleton: rootSkeleton,
 	                              kind = 'Query',
 	                              depthLimit,
-	                              dedupe = getFieldArgsDict,
-	                              duplicateArgCounts = {}
-                              }) => {
+	                              dedupe = getFieldArgsDict
+}) => {
 
 	/**
 	 * Generate the query for the specified field
