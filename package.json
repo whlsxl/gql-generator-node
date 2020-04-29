@@ -206,7 +206,7 @@
       [
         "@semantic-release/exec",
         {
-          "publish": "echo 'registry=https://npm.pkg.github.com/skitionek:_authToken=$GITHUB_TOKEN' > .npmrc"
+          "publish": "echo 'registry=https://npm.pkg.github.com/skitionek\n//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN' > .npmrc"
         }
       ],
       "@semantic-release/github",
