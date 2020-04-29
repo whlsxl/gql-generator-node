@@ -203,27 +203,21 @@
           "npmPublish": true
         }
       ],
+      "@semantic-release/changelog",
+      "@semantic-release/git",
+      "@semantic-release/github",
       [
         "@semantic-release/exec",
         {
-          "publish": "echo 'registry=https://npm.pkg.github.com/skitionek\n//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN' > .npmrc"
+          "publish": "echo '@skitionek:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN' > .npmrc"
         }
       ],
-      "@semantic-release/github",
       [
         "@semantic-release/npm",
         {
           "npmPublish": true
         }
-      ],
-      [
-        "@semantic-release/exec",
-        {
-          "publish": "rm .npmrc"
-        }
-      ],
-      "@semantic-release/changelog",
-      "@semantic-release/git"
+      ]
     ],
     "branch": "master"
   }
