@@ -209,7 +209,7 @@
       [
         "@semantic-release/exec",
         {
-          "verifyConditions": "cat .npmrc",
+          "verifyConditions": "ls",
           "publish": "echo '@skitionek:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN' > .npmrc && (echo \"`jq '.name=\"@Skitionek/gql-generator-node\"' package.json`\" > package.json)"
         }
       ],
