@@ -14,153 +14,154 @@
 	"build"     : "cross-env BABEL_ENV=production babel src --out-dir lib --source-maps --copy-files",
 	"prepublish": "npm run clean && npm run lint && npm run test && npm run build"
   },
-  "repository"     : {
-	"type": "git",
-	"url" : "git+https://github.com/Skitionek/gql-generator-node.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ardatan/graphql-import-node.git"
   },
-  "keywords"       : [
-	"graphql",
-	"query",
-	"generator"
+  "keywords": [
+    "graphql",
+    "query",
+    "generator"
   ],
-  "author"         : "timqian",
-  "contributors"   : [
-	"Dominik Maszczyk <Skitionek@gmail.com> (https://www.linkedin.com/in/dominik-maszczyk/)"
+  "author": "timqian",
+  "contributors": [
+    "Dominik Maszczyk <Skitionek@gmail.com> (https://www.linkedin.com/in/dominik-maszczyk/)"
   ],
-  "license"        : "MIT",
-  "bugs"           : {
-	"url": "https://github.com/Skitionek/gql-generator-node/issues"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ardatan/graphql-import-node/issues"
   },
-  "homepage"       : "https://github.com/Skitionek/gql-generator-node/#readme",
-  "dependencies"   : {
-	"graphql": "^0.13.2"
+  "homepage": "https://github.com/ardatan/graphql-import-node/#readme",
+  "dependencies": {
+    "graphql": "^0.13.2"
   },
   "devDependencies": {
-	"@babel/cli"                               : "^7.4.4",
-	"@babel/core"                              : "^7.4.5",
-	"@babel/node"                              : "^7.4.5",
-	"@babel/plugin-proposal-class-properties"  : "^7.4.4",
-	"@babel/plugin-proposal-decorators"        : "^7.4.4",
-	"@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-	"@babel/preset-env"                        : "^7.4.5",
-	"babel-eslint"                             : "^10.0.1",
-	"cross-env"                                : "^5.2.0",
-	"dotenv"                                   : "^8.0.0",
-	"eslint"                                   : "^5.5.0",
-	"eslint-config-airbnb-base"                : "^13.1.0",
-	"eslint-config-prettier"                   : "^4.3.0",
-	"eslint-config-uber-es2015"                : "^3.1.2",
-	"eslint-plugin-babel"                      : "^5.3.0",
-	"eslint-plugin-import"                     : "^2.14.0",
-	"eslint-plugin-jest"                       : "^22.6.4",
-	"eslint-plugin-prettier"                   : "^3.1.0",
-	"graphql-import-node"                      : "0.0.2",
-	"graphql-tag"                              : "^2.10.1",
-	"graphql-tools"                            : "^4.0.4",
-	"jest"                                     : "^24.8.0",
-	"jest-summary-reporter"                    : "0.0.2",
-	"jest-transform-graphql"                   : "^2.1.0",
-	"nodemon"                                  : "^1.19.1",
-	"should"                                   : "^13.2.1"
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "babel-eslint": "^10.0.1",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-uber-es2015": "^3.1.2",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.6.4",
+    "eslint-plugin-prettier": "^3.1.0",
+    "graphql-import-node": "0.0.2",
+    "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.4",
+    "jest": "^24.8.0",
+    "jest-summary-reporter": "0.0.2",
+    "jest-transform-graphql": "^2.1.0",
+    "mocha": "^5.0.5",
+    "nodemon": "^1.19.1",
+    "should": "^13.2.1"
   },
-  "directories"    : {
-	"test": "test"
+  "directories": {
+    "test": "test"
   },
-  "maintainers"    : [
-	{
-	  "name": "Dominik Maszczyk <Skitionek@gmail.com> (https://www.linkedin.com/in/dominik-maszczyk/)"
-	}
+  "maintainers": [
+    {
+      "name": "Dominik Maszczyk <Skitionek@gmail.com> (https://www.linkedin.com/in/dominik-maszczyk/)"
+    }
   ],
-  "engines"        : {
-	"node": ">=6.0.0"
+  "engines": {
+    "node": ">=6.0.0"
   },
-  "files"          : [
-	"lib",
-	"src"
+  "files": [
+    "lib",
+    "src"
   ],
-  "babel"          : {
-	"presets": [
-	  [
-		"@babel/preset-env",
-		{
-		  "targets": {
-			"node": "current"
-		  }
-		}
-	  ]
-	],
-	"plugins": [
-	  "@babel/plugin-proposal-object-rest-spread",
-	  [
-		"@babel/plugin-proposal-decorators",
-		{
-		  "legacy": true
-		}
-	  ],
-	  [
-		"@babel/plugin-proposal-class-properties",
-		{
-		  "loose": true
-		}
-	  ]
-	]
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread",
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
+    ]
   },
-  "eslintConfig"   : {
-	"extends": [
-	  "eslint-config-prettier",
-	  "eslint-config-uber-es2015",
-	  "prettier"
-	],
-	"env"    : {
-	  "es6"         : true,
-	  "node"        : true,
-	  "jest/globals": true
-	},
-	"parser" : "babel-eslint",
-	"plugins": [
-	  "babel",
-	  "prettier",
-	  "jest"
-	],
-	"rules"  : {
-	  "complexity"             : "off",
-	  "valid-jsdoc"            : 0,
-	  "no-var"                 : 0,
-	  "max-len"                : 0,
-	  "prefer-spread"          : 1,
-	  "prefer-template"        : 1,
-	  "quote-props"            : 1,
-	  "spaced-comment"         : 1,
-	  "max-params"             : 0,
-	  "no-multiple-empty-lines": 1,
-	  "no-process-env"         : 0,
-	  "no-inline-comments"     : 0,
-	  "no-invalid-this"        : 0,
-	  "no-unused-expressions"  : 0,
-	  "camelcase"              : 0,
-	  "consistent-return"      : 0,
-	  "comma-dangle"           : 1,
-	  "no-magic-numbers"       : [
-		"error",
-		{
-		  "ignore"      : [
-			-1,
-			0,
-			1,
-			2,
-			100
-		  ],
-		  "enforceConst": true
-		}
-	  ],
-	  "indent"                 : [
-		"error",
-		"tab"
-	  ],
-	  "func-names"             : "off",
-	  "max-statements"         : "off",
-	  "no-console"             : "off"
-	}
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-prettier",
+      "eslint-config-uber-es2015",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest/globals": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+      "babel",
+      "prettier",
+      "jest"
+    ],
+    "rules": {
+      "complexity": "off",
+      "valid-jsdoc": 0,
+      "no-var": 0,
+      "max-len": 0,
+      "prefer-spread": 1,
+      "prefer-template": 1,
+      "quote-props": 1,
+      "spaced-comment": 1,
+      "max-params": 0,
+      "no-multiple-empty-lines": 1,
+      "no-process-env": 0,
+      "no-inline-comments": 0,
+      "no-invalid-this": 0,
+      "no-unused-expressions": 0,
+      "camelcase": 0,
+      "consistent-return": 0,
+      "comma-dangle": 1,
+      "no-magic-numbers": [
+        "error",
+        {
+          "ignore": [
+            -1,
+            0,
+            1,
+            2,
+            100
+          ],
+          "enforceConst": true
+        }
+      ],
+      "indent": [
+        "error",
+        "tab"
+      ],
+      "func-names": "off",
+      "max-statements": "off",
+      "no-console": "off"
+    }
   },
   "jest"           : {
 	"transform"             : {
