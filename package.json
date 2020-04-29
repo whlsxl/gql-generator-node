@@ -115,7 +115,7 @@
     "extends": [
       "eslint-config-prettier",
       "eslint-config-uber-es2015",
-      "prettier"
+       "prettier"
     ],
     "env": {
       "es6": true,
