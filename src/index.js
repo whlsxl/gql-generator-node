@@ -17,7 +17,7 @@ export const generateQuery = ({
 	                              kind = 'Query',
 	                              depthLimit,
 	                              dedupe = getFieldArgsDict
-                              }) => {
+}) => {
 
 	/**
 	 * Generate the query for the specified field
@@ -141,7 +141,7 @@ export function generateAll(schema, depthLimit = 100, dedupe = getFieldArgsDict)
 		Query: 'queries',
 		Mutation: 'mutations',
 		Subscription: 'subscriptions'
-	}
+	};
 
 	/**
 	 * Generate the query for the specified field
