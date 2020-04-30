@@ -1,3 +1,12 @@
+## [2.1.15](https://github.com/Skitionek/gql-generator-node/compare/v2.1.14...v2.1.15) (2020-04-30)
+
+
+### Bug Fixes
+
+* Ci ([523f7d6](https://github.com/Skitionek/gql-generator-node/commit/523f7d61416a8bf0526b653f87e632f3dc7437c0))
+* Ci ([2c68cc2](https://github.com/Skitionek/gql-generator-node/commit/2c68cc2882cb0705351537e745c242e26b2f99aa))
+* queries ([a24cf08](https://github.com/Skitionek/gql-generator-node/commit/a24cf08ce5205eab49b1f8205cb1c8902acc32be))
+
 ## [2.1.14](https://github.com/Skitionek/gql-generator-node/compare/v2.1.13...v2.1.14) (2020-04-29)
 
 
