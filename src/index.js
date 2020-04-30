@@ -149,7 +149,7 @@ export function generateAll(schema, depthLimit = 100, dedupe = getFieldArgsDict)
 	 * @param description description of the current object
 	 */
 	const addToResult = (obj, description) => {
-		const kind = QUERY_KINDS_MAP[QUERY_KINDS[description]] ||
+		const kind = QUERY_KINDS_MAP[description] ||
 			moduleConsole.warn(`unknown description string: ${description}`) ||
 			`${String(description).toLowerCase()}s`;
 		result[kind] = {};
