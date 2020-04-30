@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { getArgsToVarsStr, getFieldArgsDict, getVarsToTypesStr, moduleConsole } from "./utils";
-import { QUERY_KINDS } from "./constants";
 
 /**
  * Generate the query for the specified field
